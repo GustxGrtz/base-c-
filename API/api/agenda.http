@@ -14,7 +14,7 @@ Content-Type: application/json
 
 
 ### Atualizar uma tarefa
-PUT http://localhost:5039/tarefas/alterar/6a8b3e4d-5e4e-4f7e-bdc9-9181e456ad0e
+PUT http://localhost:5039/agendas/alterar/6a8b3e4d-5e4e-4f7e-bdc9-9181e456ad0e
 
 ### Listar tarefas concluídas
 GET http://localhost:5039/agendas/concluidas

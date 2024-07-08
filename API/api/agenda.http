@@ -1,0 +1,33 @@
+### Listar todas as tarefas
+GET http://localhost:5039/agendas/listar
+
+### Cadastrar uma nova tarefa
+POST http://localhost:5039/agendas/cadastrar
+Content-Type: application/json
+
+
+{
+    "titulo" : "agenda 1",
+    "descricao" : "lista de contatos",
+    "contato" : "Teste"
+}
+
+
+### Atualizar uma tarefa
+PUT http://localhost:5039/tarefas/alterar/6a8b3e4d-5e4e-4f7e-bdc9-9181e456ad0e
+
+### Listar tarefas concluídas
+GET http://localhost:5039/agendas/concluidas
+
+### Listar tarefas pendentes
+GET http://localhost:5039/agendas/naoconcluidas
+
+### Alterar agenda
+PUT http://localhost:5039/agendas/alterar/fe2b0a40-d1f5-478c-b906-2c0acfc2b2f1
+Content-Type: application/json
+
+{    
+    "titulo" : "agenda 2",
+    "descricao" : "lista de contatos",
+    "contato" : "Teste2"
+}

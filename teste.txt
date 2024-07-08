@@ -1,0 +1,88 @@
+git add --all
+
+git commit -m "api"
+
+git push
+
+remover pasta bin, obj e node modules
+
+
+
+
+
+
+
+
+
+
+
+
+
+// ENDPOINTS DE grupos e contatos
+// POST: http://localhost:5273/api/grupos/{grupoId}/contatos/{contatoId}
+app.MapPost("/api/grupos/{grupoId}/contatos/{contatoId}", ([FromRoute] string grupoId, [FromRoute] string contatoId, [FromServices] AppDataContext ctx) =>
+{
+    // Implementar a adição de um contato ao grupo
+    // Exemplo simples: associar o contato ao grupo pelo ID
+    var grupo = ctx.Grupos.Find(grupoId);
+    var contato = ctx.Contatos.Find(contatoId);
+
+    if (grupo == null || contato == null)
+    {
+        return Results.NotFound("Grupo ou contato não encontrado");
+    }
+
+    grupo.Contatos.Add(contato);
+    ctx.SaveChanges();
+
+    return Results.Created("", grupo);
+});
+
+// GET: http://localhost:5273/api/grupos/{grupoId}/contatos
+app.MapGet("/api/grupos/{grupoId}/contatos", ([FromRoute] string grupoId, [FromServices] AppDataContext ctx) =>
+{
+    // Implementar a listagem de contatos de um grupo
+    var grupo = ctx.Grupos.Include(g => g.Contatos).FirstOrDefault(g => g.Id == grupoId);
+
+    if (grupo == null)
+    {
+        return Results.NotFound("Grupo não encontrado");
+    }
+
+    return Results.Ok(grupo.Contatos);
+});
+
+// DELETE: http://localhost:5273/api/grupos/{grupoId}/contatos/{contatoId}
+app.MapDelete("/api/grupos/{grupoId}/contatos/{contatoId}", ([FromRoute] string grupoId, [FromRoute] string contatoId, [FromServices] AppDataContext ctx) =>
+{
+    // Implementar a remoção de um contato de um grupo
+    var grupo = ctx.Grupos.Include(g => g.Contatos).FirstOrDefault(g => g.Id == grupoId);
+
+    if (grupo == null)
+    {
+        return Results.NotFound("Grupo não encontrado");
+    }
+
+    var contato = grupo.Contatos.FirstOrDefault(c => c.Id == contatoId);
+
+    if (contato == null)
+    {
+        return Results.NotFound("Contato não encontrado no grupo");
+    }
+
+    grupo.Contatos.Remove(contato);
+    ctx.SaveChanges();
+
+    return Results.Ok(grupo.Contatos);
+});
+
+
+
+#### Adicionar filtrar por grupo
+POST http://localhost:5039/api/grupos/{grupoId}/contatos/{contatoId}
+
+#### Listar filtrar por grupo
+GET http://localhost:5039/api/grupos/{grupoId}/contatos
+
+#### Remover filtrar por grupo
+DELETE http://localhost:5039/api/grupos/{grupoId}/contatos/{contatoId}
